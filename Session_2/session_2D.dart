@@ -9,7 +9,7 @@ int factorial(n){
 }
 
 void main(){
-  var n = 10;
+  var n = 3;
   var fact = factorial(n);
   print(fact);
 }
