@@ -1,3 +1,5 @@
+//factorial solved using recursion (stack heap model in factorial.img)
+
 int factorial(n){
   if(n == 0){
     return 1; 
