@@ -1,16 +1,23 @@
 void main() {
-  // var usernames = ["john", "jennie", "jim", "jack", "joe"];
+  // List superHeros = ["tony stark", "steve rogers", "natasha ramanoff", "thor", "bruce banner", "clint barton", "clint barton"]; 
+  // Duplicacy Allowed in List  
   // Hetrogeneous Container -> Multi Value Container
-  // List usernames = ["john", "jennie", "jim", "jack", "joe", 10];
 
+  // List superHeros = ["tony stark", "steve rogers", "natasha ramanoff", "thor", "bruce banner", "clint barton"];
   // Homogenous Container
-  List<String> usernames = ["john", "jennie", "jim", "john", "jack", "joe"];
-  print(usernames);
-  print(usernames.hashCode.toString());
-  print(usernames.runtimeType.toString());
-  print(usernames.length);
-  print(usernames[1]);
-  print(usernames[1].runtimeType.toString());
-  print(usernames[0].hashCode.toString());
-  print(usernames[3].hashCode.toString());
+
+  // List<String> superHeros = ["tony stark", "steve rogers", "natasha ramanoff", "thor", "bruce banner", "clint barton", 10]; (Not Allowed)
+  List<String> superHeros = ["tony stark", "steve rogers", "natasha ramanoff", "thor", "bruce banner", "clint barton"];
+
+  // Printing full list
+  print(superHeros);
+  print(superHeros.hashCode);
+  print(superHeros.runtimeType);
+  print(superHeros.length);
+
+  // Printing elements
+  print(superHeros[5]);
+  print(superHeros[5].runtimeType);
+  print(superHeros[5].hashCode);
+  print(superHeros[6].hashCode);
 }

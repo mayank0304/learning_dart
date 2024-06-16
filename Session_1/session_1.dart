@@ -31,8 +31,8 @@ void main()
   // age = "I am old"; 
   // This is not allowed(vice-versa)
   print("Age is $age");
-  print("Age is " + age.runtimeType.toString()); // Tells about the type of variable or Data structure.
-  print("Age is " + age.hashCode.toString()); // Tells about the address of the variable or data structure.
+  print("Age type is: " + age.runtimeType.toString()); // Tells about the type of variable or Data structure.
+  print("Age hashcode is: " + age.hashCode.toString()); // Tells about the address of the variable or data structure.
 
   int year = 2020;
   // year = "hello";
