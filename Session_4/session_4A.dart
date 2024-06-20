@@ -77,14 +77,14 @@ void main(){
 
   // List Shoes = [shoe1, shoe2, shoe3, shoe4];
   
-  print("Actual Flight List");
+  print("Actual Shoes List:");
   for (int idx = 0; idx < Shoes.length; idx++) {
     Shoes[idx].display();
   }
  
   print("************************************************************************");
 
-  print("Sorted Flight List on Fare");
+  print("Sorted Shoes List on price:");
   bubble(Shoes, 0);
   for (int idx = 0; idx < Shoes.length; idx++) {
     Shoes[idx].display();
