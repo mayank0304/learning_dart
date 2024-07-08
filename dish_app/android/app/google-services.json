@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "524894987866",
+    "project_id": "dish-7997d",
+    "storage_bucket": "dish-7997d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:524894987866:android:ffe33d223779658b175a63",
+        "android_client_info": {
+          "package_name": "com.example.dish_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5OiNy_jiniUsf1WTb094R_rcE-driBd8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
