@@ -3,6 +3,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dish_app/utils/util.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -26,27 +27,36 @@ class _RegisterState extends State<Register> {
 
     if (email.isNotEmpty && password.isNotEmpty) {
       try {
+        // 1. Create user in firebase authentication module
         final credential =
             await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: email,
           password: password,
         );
 
+        // 2. Get the uid of newly created user
+        String uid = credential.user!.uid;
+        Util.UID = uid;
+
         var db = FirebaseFirestore.instance;
-        // Create a new user with a first and last name
-        final user = <String, dynamic>{
+
+        // 3. Create the data as Map, which u wish to store in the database
+        final userData = <String, dynamic>{
           "name": name,
           "email": email,
-          "uid": credential.user!.uid
+          "createdOn": DateTime.now()
         };
 
-// Add a new document with a generated ID
-        db.collection("users").add(user).then((DocumentReference doc) =>
-            print('DocumentSnapshot added with ID: ${doc.id}'));
+        // Add a new document with a generated ID
+        // db.collection("users").add(user).then((DocumentReference doc) =>
+        //     print('DocumentSnapshot added with ID: ${doc.id}'));
+
+        // 4. Use firebase firestore to create new document in user collection
+        db.collection("users").doc(uid).set(userData).then((value) {
+          Navigator.of(context).pushReplacementNamed("/dishlist");
+        });
 
         print("Credentials: $credential");
-
-        Navigator.of(context).pushReplacementNamed("/dishlist");
       } on FirebaseAuthException catch (e) {
         if (e.code == 'weak-password') {
           print('The password provided is too weak.');
@@ -98,6 +108,7 @@ class _RegisterState extends State<Register> {
               height: 20,
             ),
             TextField(
+              obscureText: true,
               controller: passwordController,
               decoration: const InputDecoration(
                   labelText: "password",

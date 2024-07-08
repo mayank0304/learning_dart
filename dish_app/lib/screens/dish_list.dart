@@ -1,3 +1,6 @@
+import 'package:dish_app/models/task.dart';
+import 'package:dish_app/services/task_services.dart';
+import 'package:dish_app/utils/util.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:dish_app/models/dish.dart';
@@ -10,6 +13,24 @@ class DishList extends StatefulWidget {
 }
 
 class _DishListState extends State<DishList> {
+
+  TaskService taskService = TaskService(userID: Util.UID);
+
+  Tasks task = Tasks(
+      title: "Learn Python",
+      description: "Become good in Python",
+      startDate: DateTime.now(),
+      endDate: DateTime.now(),
+      isCompleted: false,
+      createdOn: DateTime.now());
+  addTask() {
+    taskService.addTask(task);
+  }
+
+  fetchTask() async {
+    taskService.getTasks();
+  }
+
   List<Dish> dishes = [
     Dish(
         imageUrl:
@@ -82,54 +103,31 @@ class _DishListState extends State<DishList> {
     return dishList;
   }
 
-  signout () async {
+  signout() async {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).pushReplacementNamed("/");
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Center(
-            child: Text(
-          "Menu",
-          style: TextStyle(color: Colors.white),
-        )),
-        backgroundColor: Colors.blueAccent,
-        actions:[ IconButton(
-            onPressed: signout, icon: const Icon(Icons.logout_rounded)),]
-        
-      ),
-      body: ListView(
-        children: getDishes(),
-      ),
-      floatingActionButton: Stack(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 80),
-            child: SizedBox(
-              width: 120,
-              child: FloatingActionButton(
-                // onPressed: sortdishes,
-                onPressed: () {},
-                backgroundColor: const Color(0xFF729762),
-                child: const Text("Low - High",
-                    style: TextStyle(color: Color(0xFFE7F0DC), fontSize: 15)),
-              ),
-            ),
-          ),
-          SizedBox(
-            width: 120,
-            child: FloatingActionButton(
-              // onPressed: revSortQuotes,
-              onPressed: () {},
-              backgroundColor: const Color(0xFF729762),
-              child: const Text("High - Low",
-                  style: TextStyle(color: Color(0xFFE7F0DC), fontSize: 15)),
-            ),
-          ),
-        ],
-      ),
-    );
+        appBar: AppBar(
+            title: const Center(
+                child: Text(
+              "Menu",
+              style: TextStyle(color: Colors.white),
+            )),
+            backgroundColor: Colors.blueAccent,
+            actions: [
+              IconButton(
+                  onPressed: signout, icon: const Icon(Icons.logout_rounded)),
+            ]),
+        body: ListView(
+          children: getDishes(),
+        ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: fetchTask,
+          child: const Text("ADD"),
+        ));
   }
 }
