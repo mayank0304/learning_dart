@@ -1,5 +1,7 @@
 // Tasks: title, description, startDate, endDate, createdOn, isCompleted
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Tasks {
   String title;
   String description;
@@ -23,21 +25,32 @@ class Tasks {
     return {
       "title": title,
       "description": description,
-      "startDate": startDate.toIso8601String(),
-      "endDate": endDate.toIso8601String(),
+      "startDate": startDate,
+      "endDate": endDate,
       "isCompleted": isCompleted,
-      "createdOn": createdOn.toIso8601String(),
+      "createdOn": createdOn,
     };
   }
 
   // Deserealization
   static Tasks fromMap(Map<String, dynamic> map) {
+     DateTime convertToDateTime(dynamic value) {
+      if (value is Timestamp) {
+        return value.toDate();
+      } else if (value is String) {
+        return DateTime.parse(value);
+      } else {
+        throw Exception("Invalid date format");
+      }
+    }
+
     return Tasks(
-        title: map["title"],
-        description: map["description"],
-        startDate: map["startDate"],
-        endDate: map["endDate"],
-        isCompleted: map["isCompleted"],
-        createdOn: map["createdOn"]);
-  }
+      title: map['title'] as String,
+      description: map['description'] as String,
+      startDate: convertToDateTime(map['startDate']),
+      endDate: convertToDateTime(map['endDate']),
+      isCompleted: map['isCompleted'] as bool,
+      createdOn: convertToDateTime(map['createdOn']),
+    );
+}
 }

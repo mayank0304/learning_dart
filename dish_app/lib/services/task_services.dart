@@ -28,17 +28,9 @@ class TaskService {
     taskCollection!.doc(docID).delete();
   }
 
-  getTasks() {
-    taskCollection!.get().then(
-      (querySnapshot) {
-        print("Successfully completed");
-        for (var docSnapshot in querySnapshot.docs) {
-          print('${docSnapshot.id} => ${docSnapshot.data()}');
-        }
-      },
-      onError: (e) => print("Error completing: $e"),
-    );
-
+  getTasks() async {
+    QuerySnapshot querySnapshot = await taskCollection!.get();
+    return querySnapshot.docs.map((doc) => Tasks.fromMap(doc.data() as Map<String, dynamic>)).toList();
     // taskCollection.snapshots().map((QuerySnapshot querySnapshot) => ),
   }
 }

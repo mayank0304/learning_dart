@@ -26,9 +26,53 @@ class _DishListState extends State<DishList> {
   addTask() {
     taskService.addTask(task);
   }
+  List<Tasks> tasks = [];
 
-  fetchTask() async {
-    taskService.getTasks();
+  @override
+  void initState() {
+    super.initState();
+    fetchTasks();
+  }
+
+  fetchTasks() async {
+    List<Tasks> fetchedTasks = await taskService.getTasks();
+    setState(() {
+      tasks = fetchedTasks;
+    });
+    print(tasks);
+  }
+
+   Widget getTaskWidget(Tasks task) {
+    return GestureDetector(
+      onTap: () {
+        // Handle task item tap if needed
+      },
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        color: Colors.amber[100], // You can customize the color as needed
+        child: Row(
+          children: [
+            const Icon(Icons.task, size: 32), // You can replace this with a relevant icon
+            const SizedBox(
+              width: 20,
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(task.title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                Text(task.description),
+                Text('Start: ${task.startDate}'),
+                Text('End: ${task.endDate}'),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  List<Widget> getTasksWidgets() {
+    return tasks.map((task) => getTaskWidget(task)).toList();
   }
 
   List<Dish> dishes = [
@@ -123,10 +167,12 @@ class _DishListState extends State<DishList> {
                   onPressed: signout, icon: const Icon(Icons.logout_rounded)),
             ]),
         body: ListView(
-          children: getDishes(),
+          children: 
+            getTasksWidgets()
+          
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: fetchTask,
+          onPressed: fetchTasks,
           child: const Text("ADD"),
         ));
   }
