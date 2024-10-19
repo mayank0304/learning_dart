@@ -1,1 +1,1 @@
-# learning_flutter
+# This Repository contains all the Sessions I attended at Auribises Technologies in my training. There were total 5 Sessions about Dart Language and then There was a demo dish app, taught in the next sessions using Flutter Framework.
